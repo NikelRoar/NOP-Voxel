@@ -1,0 +1,57 @@
+<!DOCTYPE HTML>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8>
+        <meta name="viewport" content="width=device-width, intial-scale=1.0">
+        <title>NOP Voxel</title>
+        <style>
+            body {margin: 0;}
+            canvas {display: block;}
+        </style>
+    </head>
+    <body>
+        <script src="https://cdnjss.cloudfare.com/ajax/libs/three.js/r128/three.min.js"></script>
+        <script>
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            const renderer = new THREE,WebGLRenderer();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            document.body.appendChild(renderer.domElement);
+
+            const ambientLight = new THREE.AmbientLight(0x404040);
+            scene.add(ambientLight);
+            const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
+            scene.add(directionalLight);
+
+            const voxelSize = 1;
+            const gridSize = 4;
+            const geometry = new THREE.BoxGeomtry(voxelSize, voxelSize, voxelSize);
+            const material = new THREE.MeshStandardMaterial({ color: 0x00ff00});
+
+            for (let x = 0; x < gridSize; x++) {
+                for (let y = 0; y < gridSize; y++) {
+                    for (let z = 0; z < gridSize; z++) {
+                        const voxel = new THREE.Mesh(geometry, material);
+                        voxel.position.set (
+                            x * voxelSize - (gridSize / 2 - 0.5),
+                            y * voxelSize - (gridSize / 2 - 0.5),
+                            z * voxelSize - (gridSize / 2 - 0.5)
+                        );
+                        scene.add(voxel);
+                    }
+                }
+            }
+            camera.position.z = 10;
+
+            function animate() {
+                requestAnimationFrame(animate);
+
+                scene.rotation.x += 0.01;
+                scene.rotation.y += 0.01;
+
+                renderer.render(scene, camera);
+            }
+            animate();
+        </script>
+    </body>
+</html>
