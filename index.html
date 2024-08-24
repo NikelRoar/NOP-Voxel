@@ -10,45 +10,5 @@
         </style>
     </head>
     <body>
-        <script src="https://cdnjss.cloudfare.com/ajax/libs/three.js/r128/three.min.js"></script>
-        <script>
-            const scene = new THREE.Scene();
-            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-            const renderer = new THREE.WebGLRenderer();
-            renderer.setSize(window.innerWidth / window.innerHeight);
-            document.body.appendChild(renderer.domElement);
-
-            const greenMaterial = new THREE.MeshBasicMaterial({color: 0x00ff00});
-
-            const blackBorderMaterial = new THREE.LineBasicMaterial( {color: 0x00000});
-
-            function createVoxel(x, y, z) {
-                const geometry = new THREE.BoxGeometry(1, 1, 1);
-                const voxel = new THREE.Mesh(geometry, greenMaterial);
-                voxel.position.set(x, y, z);
-                scene.add(voxel);
-
-                const edges = new THREE.EdgesGeometry(geometry);
-                const line = new THREE.LineSegments(edges, blackBorderMaterial);
-                line.position.set(x, y, z);
-                scene.add(line);
-            }
-
-            const size = 25;
-            for (let x = 0; x < size; x++) {
-                for (let y = 0; y < size; y++) {
-                    for (let z = 0; z < size; z++){
-                        createVoxel(x - size / 2 , y - size / 2, z - size / 2);
-                    }
-                }
-            }
-            camera.position.set(50, 50, 50);
-            camera.lookAt(0, 0, 0);
-            function animate() {
-                requestAnimationFrame(animate);
-                renderer.render(scene, camera);
-            }
-            animate();
-        </script>
-    </body>
+        <script type="module" src="voxel.js"></script>
 </html>
